@@ -1,0 +1,72 @@
+## [2026-10-24T19:51:59+05:30] SESSION START
+
+tool=Claude Code
+model=claude-opus-5-5
+Repo Root: D:\downloads\hackerrank oct\hackerrank-orchestrate-october26
+Branch: main
+Worktree: main
+Parent Agent: none
+Language: py
+Time Remaining: not configured
+
+## [2026-10-24T20:55:00+05:30] Analyse dataset and problem; architect deletion-audit agent
+
+User Prompt (verbatim, secrets redacted):
+https://github.com/interviewstreet/hackerrank-orchestrate-october26 https://github.com/interviewstreet/hackerrank-orchestrate-october26/blob/main/problem_statement.md   https://www.hackerrank.com/contests/hackerrank-orchestrate-october26/challenges/ghost-data-still-exists   Ghost Data Still Exists [challenge description pasted from the HackerRank page: Northstar Shop scenario, what to build, deletion requests, requirements, submissions, AI Judge interview] ideate analyse the whole database and the entire problem statement all required deliverables and such architect plan and implement
+
+Agent Response Summary:
+Cloned the starter repo, read AGENTS.md / problem_statement.md / README, and analysed every participant-facing file: identities and audit history (email_hash = sha256(lowercased email), 3 duplicated names), the activity stream, all 94 evidence files across JSON, SQLite, six log syntaxes, hand-over text, PDFs and screenshots. Derived the generator's semantics from the 32 samples: direct identifier links, trace-id joins in logs, replica drift, time discipline at audit_at, coverage-based absence, and that 404 profiles and anonymised analytics can only be tied to a request through deletion-worker activities. Chose a deterministic Python evidence engine with optional Claude layers, and built the identity, activity, evidence-parsing (incl. local RapidOCR), intent and policy modules.
+
+Actions:
+* git clone of the challenge repo; created .venv with rapidocr-onnxruntime, pdfplumber, anthropic
+* Wrote code/audit_agent/{paths,textutil,models,identity,activity,intent,policy}.py and code/audit_agent/evidence/*
+* Exploration scripts (scratchpad only) to profile requests, activities and per-case evidence timelines
+
+Context:
+tool=Claude Code
+model=claude-opus-5-5
+branch=main
+repo_root=D:\downloads\hackerrank oct\hackerrank-orchestrate-october26
+worktree=main
+parent_agent=none
+
+## [2026-10-24T21:34:37+05:30] Implement linker, reasoner, evaluation, reports, package
+
+User Prompt (verbatim, secrets redacted):
+continue
+
+Agent Response Summary:
+Implemented the global linker (direct links, later identity hints, workflow-activity assignment with hard timing window, claim consistency between reported status and activity result, evidence affinity and policy-action cadence), the state/policy reasoner and the planner; added the CLI with contract validation, Claude client (claude-opus-5-5, JSON-schema output, server-side refusal fallback, disk cache) and usage tracking. Iterated on the samples from step F1 0.953 to 0.992 (status accuracy 1.000; the 3 remaining misses reference resources absent from all participant data), audited the 518 evaluation predictions and fixed four issues found there, and wrote six custom evaluation cases (one exposed a forced-assignment bug, now fixed). Produced output.csv (518 rows: 354 INCOMPLETE, 154 COMPLETE, 10 NOT_APPLICABLE), evaluation_report.md, usage_report.md, README and code.zip; verified a clean extraction reproduces output.csv byte-for-byte. No API key was available, so the final run used the offline path (rules + local OCR, 0 tokens).
+
+Actions:
+* Wrote code/audit_agent/{linker,reasoner,agent,llm,usage}.py, code/main.py, code/requirements.txt
+* Wrote code/evaluation/{metrics,custom_cases,main}.py; generated evaluation_report.md and usage_report.md
+* Ran python code/main.py (eval + sample), python code/evaluation/main.py; rewrote README.md; added .gitignore; built code.zip
+
+Context:
+tool=Claude Code
+model=claude-opus-5-5
+branch=main
+repo_root=D:\downloads\hackerrank oct\hackerrank-orchestrate-october26
+worktree=main
+parent_agent=none
+
+## [2026-10-24T22:01:28+05:30] Final submission audit against problem statement and checklist
+
+User Prompt (verbatim, secrets redacted):
+once audit again the problem statement and everything and are ready for submission
+
+Agent Response Summary:
+Ran an independent audit script re-checking every contract rule (header, 518 rows in input order, JSON shape and fields, numbering, phase/operation/system/resource ordering, state-operation pairs, evidence present on findings and COMPLETE verifications, evidence IDs exist and are never captured after audit_at, no evidence on future steps, finding/remediation/verification consistency) plus code.zip contents and log.txt fields. It found one defect: case_63 was COMPLETE with an empty plan because a catalogue link was rejected when the screenshot showed an identity unknown to the dataset; the rule now rejects a link only when the screen shows a different known person, so case_63 reports and deletes the live marketing profile. Added an empty-plan check to the built-in validator, regenerated output.csv and both reports from a clean run, rebuilt code.zip and confirmed a clean extraction reproduces output.csv byte-for-byte.
+
+Actions:
+* Edited code/audit_agent/agent.py (catalogue-claim rule), code/main.py (validator), code/evaluation/main.py, README.md
+* Ran python code/main.py, python code/evaluation/main.py, independent audit script, clean-checkout reproduction test; rebuilt code.zip
+
+Context:
+tool=Claude Code
+model=claude-opus-5-5
+branch=main
+repo_root=D:\downloads\hackerrank oct\hackerrank-orchestrate-october26
+worktree=main
+parent_agent=none
